@@ -1,0 +1,113 @@
+﻿@model IEnumerable<C500Hemis.Models.TbCoCauToChuc>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cơ cấu tổ chức</h1>
+
+<p>
+    <a asp-action="Create" class="lien-ket" style="background-color: #00FF00; padding: 8px;
+        border-radius: 10px;"><i class="ti-new-window"></i> Tạo cơ cấu tổ chức mới</a>
+</p>
+
+<link rel="stylesheet" href="//cdn.datatables.net/2.1.7/css/dataTables.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//cdn.datatables.net/2.1.7/js/dataTables.min.js"></script>
+<link href="~/themify-icons/themify-icons.css" rel="stylesheet" />
+<script>
+    jQuery.noConflict();
+    jQuery(document).ready(function ($) {
+        $('#myTable').DataTable();
+    })
+</script>
+
+<style>
+    th{
+        background-color: #f2f2f2;
+    }
+
+    .lien-ket{
+        display: inline-block;
+        text-decoration: none;
+        color: black;
+        padding: 8px;
+        border-radius: 10px;
+    }
+
+    .lien-ket:hover{
+        opacity: 60%;
+        color: black;
+    }
+    
+    th, .can-giua{
+        text-align: center;
+    }
+</style>
+
+<table id="myTable" class="display dataTable" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCoCauToChuc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaPhongBanDonVi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaPhongBanDonViCha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenPhongBanDonVi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoQuyetDinhThanhLap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayRaQuyetDinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdLoaiPhongBanNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTrangThaiNavigation)
+            </th>
+            <th>THÊM</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="can-giua">
+                @Html.DisplayFor(modelItem => item.IdCoCauToChuc)
+            </td>
+            <td class="can-giua">
+                @Html.DisplayFor(modelItem => item.MaPhongBanDonVi)
+            </td>
+            <td class="can-giua">
+                @Html.DisplayFor(modelItem => item.MaPhongBanDonViCha)
+            </td>
+            <td class="can-giua">
+                @Html.DisplayFor(modelItem => item.TenPhongBanDonVi)
+            </td>
+            <td class="can-giua">
+                @Html.DisplayFor(modelItem => item.SoQuyetDinhThanhLap)
+            </td>
+            <td class="can-giua">
+                @Html.DisplayFor(modelItem => item.NgayRaQuyetDinh)
+            </td>
+            <td class="can-giua">
+                    @Html.DisplayFor(modelItem => item.IdLoaiPhongBanNavigation.IdLoaiPhongBan)
+                </td>
+                <td class="can-giua">
+                    @Html.DisplayFor(modelItem => item.IdTrangThaiNavigation.IdTrangThaiCoSoGd)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdCoCauToChuc" class="lien-ket" style="background-color: orange; margin-bottom: 10px;"><i class="ti-pencil-alt"></i> Sửa</a>
+                    <a asp-action="Details" asp-route-id="@item.IdCoCauToChuc" class="lien-ket" style="background-color: #3399FF; margin-bottom: 10px;"><i class="ti-info-alt"></i> Chi tiết</a>
+                    <a asp-action="Delete" asp-route-id="@item.IdCoCauToChuc" class="lien-ket" style="background-color: red; color: #FFFFFF;"><i class="ti-trash"></i> Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

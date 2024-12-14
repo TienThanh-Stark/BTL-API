@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CSGD</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CTDT.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Bungee+Inline&family=Dancing+Script:wght@400..700&family=Fira+Sans&family=Protest+Revolution&family=Square+Peg&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/images/papper.jpeg');
+            background-size: cover;
+            background-repeat: repeat;
+            background-position: center;
+            position: relative;
+        }
+
+        header {
+            position: sticky;
+            z-index: 100;
+            top: 0;
+            width: 100vw;
+            height: 50px;
+            background-color: #8EB486;
+        }
+
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            background-color: white;
+            width: 100vw;
+            height: 50px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            width: 100%;
+        }
+
+        .navbar a.nav-link {
+            transition: color 0.3s, background-color 0.3s, transform 0.3s;
+        }
+
+            .navbar a.nav-link:hover {
+                background-color: rgb(142, 172, 195);
+                transform: scale(1.1);
+            }
+
+        .navbar-nav .nav-item .nav-link.active {
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #0056b3;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .taichinh {
+            font-family: "Fira Sans", sans-serif;
+            font-weight: 900;
+            font-style: italic;
+        }
+
+        .navbar a.nav-link {
+            transition: color 0.3s, background-color 0.3s, transform 0.3s; /* Hiệu ứng chuyển động */
+        }
+
+            .navbar a.nav-link:hover {
+                background-color: #685752; /* Màu nền khi hover */
+
+                transform: scale(1.1); /* Phóng to nhẹ khi di chuột */
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+
+                <a class="taichinh navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="CSGD">CƠ SỞ GIÁO DỤC</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="./CoCauToChuc">Cơ Cấu Tổ Chức</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="./CoSoGiaoDuc">Cơ sở giáo dục</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="./DanhHieuThiDuaGiaiThuongKhenThuongCuaCoSoGd">Danh hiệu thi đua giải thưởng khen thưởng của cơ sở giáo dục</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="./DauMoiLienHe">Đầu mối liên hệ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="./DonViLienKetDaoTaoGiaoDuc">Đơn vị liên kết đào tạo giáo dục</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="./KhoaHoc">Khoa học</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="./LichSuDoiTenTruong">Lịch sử đổi tên trường</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="./ToChucKiemDinh">Tổ chức kiểm định</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="./VanBanTuChu">Văn bản từ chữ</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <div class="" style="width:100vw; height:100vh; position:relative;">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    @* <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - CSGD - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer> *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+            const currentUrl = window.location.pathname.toLowerCase();
+            navLinks.forEach(link => {
+                if (link.getAttribute("href").toLowerCase() === currentUrl) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
