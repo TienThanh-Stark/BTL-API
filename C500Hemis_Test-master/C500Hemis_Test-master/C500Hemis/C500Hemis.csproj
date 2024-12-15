@@ -23,7 +23,4 @@
     <Folder Include="Controllers\CSGD\" />
     <Folder Include="TaiLieu\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="wwwroot\images\tthtncs.png" />
-  </ItemGroup>
 </Project>

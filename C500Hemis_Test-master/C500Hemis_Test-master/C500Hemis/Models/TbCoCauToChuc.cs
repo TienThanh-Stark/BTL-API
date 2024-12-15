@@ -26,7 +26,9 @@ public partial class TbCoCauToChuc
     public string? SoQuyetDinhThanhLap { get; set; }
 
     [Display(Name = "NGÀY RA QUYẾT ĐỊNH")]
-    public string? NgayRaQuyetDinh { get; set; }
+    [DataType(DataType.Date)]
+    [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+    public DateOnly? NgayRaQuyetDinh { get; set; }
 
     [Display(Name = "ID TRẠNG THÁI")]
     public int? IdTrangThai { get; set; }

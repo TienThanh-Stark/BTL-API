@@ -3,122 +3,43 @@
 @{
     ViewData["Title"] = "Delete";
 }
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            background-color: #FFE9D0;
-            color: #553f3a;
-            font-family: "IBM Plex Serif", serif;
-            font-weight: 500;
-            font-style: normal;
-        }
 
-        .container {
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            max-width: 600px;
-            width: 100%;
-            margin: auto;
-            background-color: #FF8A8A;
-            margin-top: 20px;
-        }
+<h1>Delete</h1>
 
-        h1 {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: black;
-            text-align: center;
-        }
-
-        .info-table {
-            background-color: #CCE0AC;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        label {
-            font-size: 16px;
-            color: #553f3a;
-        }
-
-        h1 {
-            color: #F0EAAC;
-            text-align: center;
-        }
-
-        .cen {
-            text-align: center;
-        }
-
-        input[type="submit"] {
-            width: 10%;
-            padding: 10px;
-            background-color: #EE2C2C;
-            border: none;
-            border-radius: 5px;
-            color: #FFFFFF;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-            input[type="submit"]:hover {
-                background-color: #FF6A6A;
-            }
-    </style>
-</head>
-
-<h1><b> BẠN CÓ CHẮC CHẮN MUỐN XÓA ?</b></h1>
-
-<div class="container">
-    <div class="info-table">
-        <h4>Thông Tin Đơn Vị Liên Kết Đào Tạo Giáo Dục</h4>
-        <hr />
-
-        <div class="form-group">
-            <label asp-for="IdDonViLienKetDaoTaoGiaoDuc" class="control-label"><b>ID Đơn Vị</b></label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" value="@Html.DisplayFor(model => model.IdDonViLienKetDaoTaoGiaoDuc)" readonly>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="DiaChi" class="control-label"><b>Địa Chỉ</b></label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" value="@Html.DisplayFor(model => model.DiaChi)" readonly>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="DienThoai" class="control-label"><b>Điện Thoại</b></label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" value="@Html.DisplayFor(model => model.DienThoai)" readonly>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="IdCoSoGiaoDucNavigation" class="control-label"><b>Cơ Sở Giáo Dục</b></label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" value="@Html.DisplayFor(model => model.IdCoSoGiaoDucNavigation.TenDonVi)" readonly>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="IdLoaiLienKetNavigation" class="control-label"><b>Loại Liên Kết</b></label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" value="@Html.DisplayFor(model => model.IdLoaiLienKetNavigation.IdLoaiLienKet)" readonly>
-            </div>
-        </div>
-    </div>
-
-    <form asp-action="Delete" class="cen" style="margin-top:10px;">
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TbDonViLienKetDaoTaoGiaoDuc</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DiaChi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DiaChi)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DienThoai)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DienThoai)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdCoSoGiaoDucNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdCoSoGiaoDucNavigation.IdCoSoGiaoDuc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdLoaiLienKetNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdLoaiLienKetNavigation.IdLoaiLienKet)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
         <input type="hidden" asp-for="IdDonViLienKetDaoTaoGiaoDuc" />
-        <input type="submit" value="Xóa" class="btn btn-danger" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
     </form>
-    <div style=" text-align:center; ">
-        <a asp-action="Index" class="btn btn-back" style="margin-bottom:10px; color:forestgreen; padding:10px; font-size:20px; ">
-            <i class="fa-solid fa-circle-arrow-left"></i>Quay lại danh sách
-        </a>
-    </div>
 </div>
-
-

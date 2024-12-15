@@ -1,356 +1,147 @@
 ﻿@model IEnumerable<C500Hemis.Models.TbDonViLienKetDaoTaoGiaoDuc>
 
 @{
-    ViewData["Title"] = "Đơn Vị Liên Kết Đào Tạo Giáo Dục";
+    ViewData["Title"] = "Index";
 }
+<link href="~/css/styles.css" rel="stylesheet" />
+<style>
+    .datatable-selector {
+        padding: 5px 32px 5px 16px;
+    }
 
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Import Bootstrap và JQuery -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <!-- DataTables -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css" />
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
- @*   link của chart *@
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-      /*  chart */
-            .modal-dialog {
-                max-width: 70%; /* Tăng chiều rộng của modal */
-            }
+    .inline-block {
+        display: inline-flex;
+        flex-wrap: nowrap;
+        justify-content: space-evenly;
+        align-items: baseline;
+    }
 
-            .modal-body {
-                height: 80vh; /* Chiều cao tương đối của nội dung modal */
-                overflow: auto;
-            }
-     
-
-        #wrapter {
-            max-width: 1000px;
-            margin: 0px auto;
+        .inline-block label {
+            margin-right: 5px; /* Khoảng cách giữa label và select */
+            margin-bottom: 3px;
         }
 
-        body {
-            background-color: #E0E5B6;
-            color: #553f3a;
-            font-family: "IBM Plex Serif", serif;
-            font-weight: 500;
-            font-style: normal;
-        }
+    .card-footers {
+        padding: 4px 16px 4px 16px;
+        color: var(--bs-card-cap-color);
+        background-color: var(--bs-card-cap-bg);
+        border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    }
+</style>
 
-        /* Vùng header với nền trắng và chiều rộng bằng chiều rộng của bảng */
-        .header-container {
-            background-color: white;
-            padding: 20px;
-            margin: 0 auto;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            width: 1000px;
-        }
+<h1 class="mt-4">Đơn Vị Liên Kết Đào Tạo Giáo Dục</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Index</li>
+</ol>
 
-        /* Căn chỉnh H1 */
-        .header-title {
-            text-align: center;
-            color: #553f3a;
-            margin-bottom: 20px;
-        }
-
-        /* Phần tìm kiếm và nút Create */
-        .header-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        /*Thiết lập màu nền cho các nút có lớp .btn-primary là màu xanh dương */
-        .btn-primary {
-            background-color: #007BFF;
-        }
-
-            .btn-primary:hover {
-                background-color: #0056b3;
-            }
-
-        .btn-create {
-            background-color: #007BFF;
-            color: white;
-            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-        }
-
-            .btn-create:hover {
-                background-color: #0056b3;
-                font-weight: bold; /* Chữ sẽ đậm hơn khi hover */
-                transform: scale(1.05); /* Tạo hiệu ứng phóng to nhẹ khi hover */
-            }
-            /* Khi nhấn nút */
-            .btn-create:active {
-                font-weight: bolder; /* Chữ sẽ đậm hơn khi nhấn */
-                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Thay đổi bóng đổ khi nhấn */
-            }
-
-        .btn-delete {
-            background-color: #dc3f1c; /* Màu đỏ cho Xóa bỏ */
-        }
-
-            .btn-delete:hover {
-                background-color: #df8584;
-                transform: scale(1.05); /* Tạo hiệu ứng phóng to nhẹ khi hover */
-            }
-
-        .btn-edit {
-            background-color: #88a764; /* Màu xanh lá cho Chỉnh sửa */
-        }
-
-            .btn-edit:hover {
-                background-color: #f5f6b4;
-                transform: scale(1.05); /* Tạo hiệu ứng phóng to nhẹ khi hover */
-            }
-
-        .btn-details {
-            background-color: #8fc8d9; /* Màu xanh dương nhạt cho Chi tiết */
-        }
-
-            .btn-details:hover {
-                background-color: #c4faf0;
-                transform: scale(1.05); /* Tạo hiệu ứng phóng to nhẹ khi hover */
-            }
-
-        .table {
-            color: #553f3a;
-            background-color: #FFBE98;
-            width: 90%; /* Căn chỉnh chiều rộng của bảng */
-            margin: auto;
-        }
-
-        th {
-            color: #553f3a;
-            font-size: 14px;
-        }
-
-            th:hover {
-                background-color: #FFC5C5; /* Màu nền khi di chuột vào tiêu đề */
-            }
-
-        tr {
-            transition: background-color 0.3s ease; /* Thêm hiệu ứng cho hàng */
-        }
-        /* Khi di chuột vào một ô */
-        td:hover {
-            background-color: #FFC5C5; /* Màu tím sáng hơn cho ô */
-        }
-
-        .hoverRow:hover {
-            background-color: #FF76CE; /*màu khi di chuột vào hàng*/
-        }
-
-        h1 {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #2E073F;
-            text-align: center;
-        }
-    </style>
-</head>
-
-<body>
-    <div id="wrapter">
-        <div class="container mt-4 header-container" id="Header">
-            <h1 class="header-title"> <b>ĐƠN VỊ LIÊN KẾT ĐÀO TẠO GIÁO DỤC</b> </h1>
-            <form asp-controller="DonViLienKetDaoTaoGiaoDuc" asp-action="Index" method="get">
-                <div class="form-group d-flex justify-content-between align-items-center">
-                    <!-- Nút Tạo Mới nằm bên trái -->
-                    <a asp-action="Create" class="btn btn-create">
-                        Tạo Mới <i class="fa-solid fa-plus"></i>
-                    </a>
-                </div>
-            </form>
-           @*  //chart
-           <!-- Modal -->
-        <div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="chartModalLabel">Biểu Đồ Cơ Cấu Tổ Chức</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <canvas id="myChart" width="1200" height="600"></canvas>
-                    </div>
-                </div>
+<div class="row">
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-body">Tạo Mới</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" asp-action="Create">Create</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
             </div>
-        </div> *@
         </div>
-        <!--end Header-->
-        <form method="get" asp-action="ExportToExcel">
-            <button type="submit" class="btn btn-success">Xuất Excel</button>
-        </form>
-
-        <form method="post" enctype="multipart/form-data" asp-action="ImportFromExcel">
-            <div class="form-group">
-                <label for="formFile">Chọn file Excel:</label>
-                <input type="file" name="formFile" class="form-control" />
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-warning text-white mb-4">
+            <div class="card-body">Xuất Excel</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="#">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
             </div>
-            <button type="submit" class="btn btn-primary">Nhập dữ liệu</button>
-        </form>
-        <div id="main">
-            <table id="example" class="table table-striped table-bordered">
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-success text-white mb-4">
+            <div class="card-body">Import</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="#">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-danger text-white mb-4">
+            <div class="inline-block">
+                <label for="chartType">Chọn loại biểu đồ:</label>
+                <select id="chartType">
+                    <option value="bar">Biểu đồ cột</option>
+                    <option value="line">Biểu đồ đường</option>
+                    <option value="pie">Biểu đồ tròn</option>
+                </select>
+            </div>
+
+            <div class="inline-block">
+                <label for="dataType">Chọn loại dữ liệu:</label>
+                <select id="dataType">
+                    <option value="LoaiPhongBan">Loại Phòng Ban</option>
+                    <option value="TrangThai">Trạng Thái</option>
+                </select>
+            </div>
+
+            <div class="card-footers d-flex align-items-center justify-content-between" stylt="padding-bottom: 5px !important;padding-top: 5px !important;">
+                <button id="showChart" data-toggle="modal" data-target="#chartModal" style="width: 100%; border: none;">
+                    Hiển Thị Biểu Đồ
+                </button>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid px-4">
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Bảng thống kê
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
                 <thead>
-                    <tr class="hoverRow">
-                        <th style="text-align:center;">TÙY CHỌN</th>
-                        <th style="text-align:center;">
-                            @Html.DisplayNameFor(model => model.IdDonViLienKetDaoTaoGiaoDuc)
-                        </th>
-                        <th style="text-align:center;">
-                            @Html.DisplayNameFor(model => model.IdCoSoGiaoDucNavigation)
-                        </th>
-                        <th style="text-align:center;">
+                    <tr>
+                        <th>
                             @Html.DisplayNameFor(model => model.DiaChi)
                         </th>
-                        <th style="text-align:center;">
+                        <th>
                             @Html.DisplayNameFor(model => model.DienThoai)
                         </th>
-
-                        <th style="text-align:center;">
+                        <th>
+                            @Html.DisplayNameFor(model => model.IdCoSoGiaoDucNavigation)
+                        </th>
+                        <th>
                             @Html.DisplayNameFor(model => model.IdLoaiLienKetNavigation)
                         </th>
-
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
-
-                    {
-                        <tr class="hoverRow">
-
-                            <td style="text-align:center;">
-                                <a asp-action="Edit" asp-route-id="@item.IdDonViLienKetDaoTaoGiaoDuc" class="btn btn-edit" title="Sửa" data-toggle="tooltip">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
-                                <a asp-action="Details" asp-route-id="@item.IdDonViLienKetDaoTaoGiaoDuc" class="btn btn-details" title="Xem Chi Tiết" data-toggle="tooltip">
-                                    <i class="fa-solid fa-circle-info"></i>
-                                </a>
-                                <a asp-action="Delete" asp-route-id="@item.IdDonViLienKetDaoTaoGiaoDuc" class="btn btn-delete" title="Xóa" data-toggle="tooltip">
-                                    <i class="fa-solid fa-trash"></i>
-                                </a>
-                                <!--Title: hộp thoại trợ giúp giúp hiện ra khi di chuột vào-->
-                                <!--data-toggle="tooltip" Thuộc tính này kích hoạt tính năng tooltip của Bootstrap cho phần tử.-->
-                            </td>
-                            <td style="text-align:center;">
-                                @Html.DisplayFor(modelItem => item.IdDonViLienKetDaoTaoGiaoDuc)
-                            </td>
-                            <td style="text-align:left;">
-                                @Html.DisplayFor(modelItem => item.IdCoSoGiaoDucNavigation.TenDonVi)
-                            </td>
-                            <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
-                            <td style="text-align:left;">
-                                @Html.DisplayFor(modelItem => item.DienThoai)
-                            </td>
-
-                            <td>@Html.DisplayFor(modelItem => item.IdLoaiLienKetNavigation.LoaiLienKet)</td>
-
-                        </tr>
-                    }
+            @foreach (var item in Model) {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DiaChi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DienThoai)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdCoSoGiaoDucNavigation.IdCoSoGiaoDuc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdLoaiLienKetNavigation.IdLoaiLienKet)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IdDonViLienKetDaoTaoGiaoDuc">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.IdDonViLienKetDaoTaoGiaoDuc">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.IdDonViLienKetDaoTaoGiaoDuc">Delete</a>
+                        </td>
+                    </tr>
+            }
                 </tbody>
             </table>
         </div>
-
-        <script>
-            $('#example').DataTable({
-                "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Vietnamese.json"
-                },
-                "paging": true,
-                "pagingType": "full_numbers", // Hiển thị các nút đầu, trước, sau, cuối
-                "lengthChange": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false
-            });
-            //tooltip
-            $(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip({
-                    delay: { "show": 0, "hide": 100 } // Hiện ngay lập tức, tạo tgian ẩn trước khi di chuột ra ngoài 100ms
-                });
-            });
-
-            //   $('#chartModal').on('show.bs.modal', function () {
-            //     fetch('/DonViLienKetDaoTaoGiaoDuc/ChartData')
-            //         .then(response => response.json())
-            //         .then(data => {''
-            //             const ctx = document.getElementById('myChart').getContext('2d');
-            //             const myChart = new Chart(ctx, {
-            //                 type: 'pie', // Hoặc 'pie' tùy thuộc vào loại biểu đồ bạn muốn
-            //                 data: {
-            //                     labels: data.labels, // Nhãn từ dữ liệu JSON
-            //                     datasets: [{
-            //                         label: 'Số lượng phòng ban',
-            //                         data: data.values, // Giá trị từ dữ liệu JSON
-            //                         backgroundColor: [
-            //                             'rgba(255, 99, 132, 0.2)',
-            //                             'rgba(54, 162, 235, 0.2)',
-            //                             'rgba(255, 206, 86, 0.2)',
-            //                             'rgba(75, 192, 192, 0.2)',
-            //                             'rgba(153, 102, 255, 0.2)',
-            //                             'rgba(255, 159, 64, 0.2)'
-            //                         ],
-            //                         borderColor: [
-            //                             'rgba(255, 99, 132, 1)',
-            //                             'rgba(54, 162, 235, 1)',
-            //                             'rgba(255, 206, 86, 1)',
-            //                             'rgba(75, 192, 192, 1)',
-            //                             'rgba(153, 102, 255, 1)',
-            //                             'rgba(255, 159, 64, 1)'
-            //                         ],
-            //                         borderWidth: 1
-            //                     }]
-            //                 },
-            //                 options: {
-            //                     responsive: true,
-            //                     maintainAspectRatio: false, // Cho phép thay đổi tỷ lệ khung hình
-            //                     plugins: {
-            //                         legend: {
-            //                             position: 'top',
-            //                         },
-            //                         title: {
-            //                             display: true,
-            //                             text: 'Số lượng phòng ban theo loại'
-            //                         }
-            //                     }
-            //                 }
-            //             });
-            //         })
-            //         .catch(error => console.error('Error fetching chart data:', error)); // Bắt lỗi nếu có
-            // });
-        </script>
-
-
-
-       
-        
-
-
-    
-       
-          
-       
     </div>
-    <!-- end main-->
-    <div id="Footer">
-    </div>
-    <!--end Footer-->
-    </div>
-   
-
-</body>
+</div>
+<script src="~/js/datatables-simple-demo.js"></script>
