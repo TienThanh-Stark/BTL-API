@@ -1,0 +1,157 @@
+﻿@model IEnumerable<C500Hemis.Models.TbDauMoiLienHe>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="~/css/styles.css" rel="stylesheet" />
+
+<style>
+    .datatable-selector {
+        padding: 5px 32px 5px 16px;
+    }
+
+    .inline-block {
+        display: inline-flex;
+        flex-wrap: nowrap;
+        justify-content: space-evenly;
+        align-items: baseline;
+    }
+
+        .inline-block label {
+            margin-right: 5px; /* Khoảng cách giữa label và select */
+            margin-bottom: 3px;
+        }
+
+    .card-footers {
+        padding: 4px 16px 4px 16px;
+        color: var(--bs-card-cap-color);
+        background-color: var(--bs-card-cap-bg);
+        border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    }
+</style>
+
+<h1 class="mt-4">Đầu Mối Liên Hệ</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Index</li>
+</ol>
+
+<div class="row">
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-body">Tạo Mới</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" asp-action="Create">Create</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-warning text-white mb-4">
+            <div class="card-body">Xuất Excel</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="#">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-success text-white mb-4">
+            <div class="card-body">Import</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="#">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-danger text-white mb-4">
+            <div class="inline-block">
+                <label for="chartType">Chọn loại biểu đồ:</label>
+                <select id="chartType">
+                    <option value="bar">Biểu đồ cột</option>
+                    <option value="line">Biểu đồ đường</option>
+                    <option value="pie">Biểu đồ tròn</option>
+                </select>
+            </div>
+
+            <div class="inline-block">
+                <label for="dataType">Chọn loại dữ liệu:</label>
+                <select id="dataType">
+                    <option value="LoaiPhongBan">Loại Phòng Ban</option>
+                    <option value="TrangThai">Trạng Thái</option>
+                </select>
+            </div>
+
+            <div class="card-footers d-flex align-items-center justify-content-between" stylt="padding-bottom: 5px !important;padding-top: 5px !important;">
+                <button id="showChart" data-toggle="modal" data-target="#chartModal" style="width: 100%; border: none;">
+                    Hiển Thị Biểu Đồ
+                </button>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid px-4">  
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Bảng thống kê
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SoDienThoai)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IdLoaiDauMoiLienHeNavigation)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SoDienThoai)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IdLoaiDauMoiLienHeNavigation)
+                        </th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SoDienThoai)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IdLoaiDauMoiLienHeNavigation.IdDauMoiLienHe)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.IdDauMoiLienHe">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.IdDauMoiLienHe">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.IdDauMoiLienHe">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/demo/datatables-demo.js"></script>

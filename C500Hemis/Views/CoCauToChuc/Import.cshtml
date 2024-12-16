@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Import CoCauToChuc";
+}
+<style>
+    body {
+        background-color: #fff9e9;
+    }
+</style>
+<h2>Import Cơ Cấu Tổ Chức</h2>
+
+<div class="container">
+    <form asp-action="Import" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file">Tải lên File Excel (định dạng .xls hoặc .xlsx) để nhập dữ liệu cơ cấu tổ chức.</label>
+            <input type="file" name="file" class="form-control" accept=".xls,.xlsx" required />
+            <small class="form-text text-muted">Vui lòng chọn file Excel để nhập dữ liệu.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Import</button>
+    </form>
+</div>

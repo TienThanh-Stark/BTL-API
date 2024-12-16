@@ -1,0 +1,367 @@
+﻿@model IEnumerable<C500Hemis.Models.TbCoSoGiaoDuc>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="~/css/1750.css" rel="stylesheet" />
+<style>
+    .table th:first-child,
+    .table td:first-child {
+        position: sticky;
+        left: 0; /* Cố định vị trí bên trái */
+        background-color: white; /* Màu nền cho cột cố định */
+        z-index: 10; /* Đảm bảo cột này nằm trên các cột khác */
+    }
+
+    .table tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+
+    th {
+        white-space: nowrap; /* Đảm bảo nội dung không bị xuống dòng */
+        background-color: #31473a !important;
+        color: #edf4f2;
+        text-align: center;
+    }
+
+    .dataTables_scroll {
+        padding-top: 15px;
+    }
+
+    .modal-dialog {
+        max-width: 70%; /* Tăng chiều rộng của modal */
+    }
+
+    .modal-body {
+        height: 80vh; /* Chiều cao tương đối của nội dung modal */
+        overflow: auto;
+    }
+</style>
+
+<h1 class="mt-4">Cơ Sở Giáo Dục</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Index</li>
+</ol>
+
+<div class="row">
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-body" style="font-weight: bold;">Tạo Mới</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" asp-action="Create">Create</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-warning text-white mb-4">
+            <div class="card-body" style="font-weight: bold;">Xuất Excel</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" asp-action="ExportToExcel">ExportToExcel</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-success text-white mb-4">
+            <div class="card-body" style="font-weight: bold;">Upload File</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" asp-action="Import">Import</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-danger text-white mb-4">
+            <div class="inline-block">
+                <label for="chartType" style="font-weight: bold;">Chọn loại biểu đồ:</label>
+                <select id="chartType">
+                    <option value="pie">Biểu đồ tròn</option>
+                    <option value="bar">Biểu đồ cột</option>
+                    <option value="line">Biểu đồ đường</option>
+                </select>
+            </div>
+
+            <div class="inline-block">
+                <label for="dataType" style="font-weight: bold;">Chọn loại dữ liệu:</label>
+                <select id="dataType">
+                    <option value="LoaiPhongBan">Loại Phòng Ban</option>
+                    <option value="TrangThai">Trạng Thái</option>
+                </select>
+            </div>
+
+            <div class="card-footers d-flex align-items-center justify-content-between" stylt="padding-bottom: 5px !important;padding-top: 5px !important;">
+                <button id="showChart" data-toggle="modal" data-target="#chartModal" style="width: 100%; border: none; font-weight: bold;">
+                    Hiển Thị Biểu Đồ
+                </button>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid px-4">
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Bảng thống kê
+        </div>
+        <div class="card-body">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Actions</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdCoSoGiaoDuc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaDonVi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenDonVi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenTiengAnh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoQuyetDinhChuyenDoiLoaiHinh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayKyQuyetDinhChuyenDoiLoaiHinh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenDaiHocTrucThuoc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoDienThoai)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fax)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DiaChiWebsite)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoQuyetDinhThanhLap)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayKyQuyetDinhThanhLap)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DiaChi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoQuyetDinhCapPhepHoatDong)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayDuocCapPhepHoatDong)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoGiaoVienGdtc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoQuyetDinhGiaoTuChu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DaoTaoSvgdqpan1nam)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoQuyetDinhBanHanhQuyCheTaiChinh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayKyQuyetDinhBanHanhQuyCheTaiChinh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HoatDongKhongLoiNhuanNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdCoQuanChuQuanNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdHinhThucThanhLapNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdLoaiHinhCoSoDaoTaoNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdLoaiHinhTruongNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdPhanLoaiCoSoNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdTinhNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdHuyenNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdXaNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TuChuGiaoDucQpanNavigation)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdCoSoGiaoDuc">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.IdCoSoGiaoDuc">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdCoSoGiaoDuc">Delete</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdCoSoGiaoDuc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaDonVi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenDonVi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenTiengAnh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoQuyetDinhChuyenDoiLoaiHinh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayKyQuyetDinhChuyenDoiLoaiHinh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenDaiHocTrucThuoc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoDienThoai)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fax)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiaChiWebsite)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoQuyetDinhThanhLap)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayKyQuyetDinhThanhLap)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiaChi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoQuyetDinhCapPhepHoatDong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayDuocCapPhepHoatDong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoGiaoVienGdtc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoQuyetDinhGiaoTuChu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DaoTaoSvgdqpan1nam)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoQuyetDinhBanHanhQuyCheTaiChinh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayKyQuyetDinhBanHanhQuyCheTaiChinh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoatDongKhongLoiNhuanNavigation.TuyChon)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdCoQuanChuQuanNavigation.CoQuanChuQuan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdHinhThucThanhLapNavigation.HinhThucThanhLap)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdLoaiHinhCoSoDaoTaoNavigation.LoaiHinhCoSoDaoTao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdLoaiHinhTruongNavigation.LoaiHinhTruong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdPhanLoaiCoSoNavigation.PhanLoaiCoSo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdTinhNavigation.TenTinh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdHuyenNavigation.TenHuyen)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdXaNavigation.TenXa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TuChuGiaoDucQpanNavigation.TuyChon)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- FixedHeader CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.1/css/fixedHeader.dataTables.min.css">
+
+<!-- FixedHeader JS -->
+<script src="https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+<script>
+    $(document).ready(function () {
+        var table = new DataTable('.table', {
+            scrollY: "560px", // Chiều cao cuộn của nội dung bảng
+            scrollCollapse: true, // Cho phép bảng co lại nếu dữ liệu ít
+            paging: true, // Phân trang
+            scrollX: true, // Cho phép cuộn ngang
+            lengthMenu: [5, 10, 15, 20, 25, 30], // Đặt các giá trị cho menu số bản ghi
+            language: {
+                processing: "Đang tải dữ liệu", // Thông báo khi dữ liệu đang được xử lý
+                search: "Tìm nhanh: ", // Văn bản cho ô tìm kiếm
+                lengthMenu: "Số bản ghi hiển thị trên trang _MENU_ ", // Tùy chọn số bản ghi hiển thị
+                info: "Tổng bản ghi: _TOTAL_", // Hiển thị thông tin tổng số bản ghi
+                infoEmpty: "Chưa có nội dung nào trong danh sách", // Thông báo khi không có dữ liệu
+                infoFiltered: "",
+                loadingRecords: "Đang tải...", // Thông báo khi đang tải dữ liệu
+                zeroRecords: "Không tìm thấy dữ liệu!", // Thông báo khi không tìm thấy dữ liệu
+                emptyTable: "Không có dữ liệu nào!", // Thông báo khi không có dữ liệu trong bảng
+                paginate: {
+                    first: "Trang đầu", // Nút chuyển đến trang đầu
+                    previous: "Trang trước", // Nút chuyển về trang trước
+                    next: "Trang sau", // Nút chuyển đến trang sau
+                    last: "Trang cuối" // Nút chuyển đến trang cuối
+                },
+                aria: {
+                    sortAscending: ": Đang sắp xếp tăng dần", // Thông báo khi sắp xếp tăng dần
+                    sortDescending: ": Đang sắp xếp giảm dần" // Thông báo khi sắp xếp giảm dần
+                }
+            } // Đóng đối tượng language
+        }); // Đóng hàm DataTable
+    }); // Đóng hàm ready
+</script>

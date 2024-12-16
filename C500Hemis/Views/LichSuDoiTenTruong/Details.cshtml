@@ -1,0 +1,42 @@
+﻿@model C500Hemis.Models.TbLichSuDoiTenTruong
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>TbLichSuDoiTenTruong</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TenTruongCu)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TenTruongCu)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TenTruongCuTiengAnh)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TenTruongCuTiengAnh)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SoQuyetDinhDoiTen)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SoQuyetDinhDoiTen)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NgayKyQuyetDinhDoiTen)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NgayKyQuyetDinhDoiTen)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdLichSuDoiTenTruong">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

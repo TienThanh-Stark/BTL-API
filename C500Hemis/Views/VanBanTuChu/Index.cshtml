@@ -1,0 +1,248 @@
+﻿@model IEnumerable<C500Hemis.Models.TbVanBanTuChu>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+    body {
+        background-color: #fff9e9;
+    }
+
+    th {
+        background-color: #31473a !important;
+        color: #edf4f2;
+        text-align: center;
+    }
+
+    .datatable-selector {
+        padding: 5px 32px 5px 16px;
+    }
+
+    .inline-block {
+        display: inline-flex;
+        flex-wrap: nowrap;
+        justify-content: space-evenly;
+        align-items: baseline;
+    }
+
+        .inline-block label {
+            margin-right: 5px; /* Khoảng cách giữa label và select */
+            margin-bottom: 3px;
+        }
+
+    .card-footers {
+        padding: 4px 16px 4px 16px;
+        color: var(--bs-card-cap-color);
+        background-color: var(--bs-card-cap-bg);
+        border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    }
+
+    .modal-dialog {
+        max-width: 70%; /* Tăng chiều rộng của modal */
+    }
+
+    .modal-body {
+        height: 80vh; /* Chiều cao tương đối của nội dung modal */
+        overflow: auto;
+    }
+
+    .btn-delete {
+        background-color: #dc3f1c; /* Màu đỏ cho Xóa bỏ */
+    }
+
+        .btn-delete:hover {
+            background-color: #df8584;
+            transform: scale(1.05); /* Tạo hiệu ứng phóng to nhẹ khi hover */
+        }
+
+    .btn-edit {
+        background-color: #88a764; /* Màu xanh lá cho Chỉnh sửa */
+    }
+
+        .btn-edit:hover {
+            background-color: #f5f6b4;
+            transform: scale(1.05); /* Tạo hiệu ứng phóng to nhẹ khi hover */
+        }
+
+    .btn-details {
+        background-color: #8fc8d9; /* Màu xanh dương nhạt cho Chi tiết */
+    }
+
+        .btn-details:hover {
+            background-color: #c4faf0;
+            transform: scale(1.05); /* Tạo hiệu ứng phóng to nhẹ khi hover */
+        }
+</style>
+
+<h1 class="mt-4">Cơ cấu tổ chức</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Index</li>
+</ol>
+
+<div class="row">
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-body" style="font-weight: bold;">Tạo Mới</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" asp-action="Create">Create</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-warning text-white mb-4">
+            <div class="card-body" style="font-weight: bold;">Xuất Excel</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" asp-action="ExportToExcel">ExportToExcel</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-success text-white mb-4">
+            <div class="card-body" style="font-weight: bold;">Upload File</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" asp-action="Import">Import</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-danger text-white mb-4">
+            <div class="card-body">Danger Card</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#chartModal">Hiển thị Biểu Đồ</button>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid px-4">
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Bảng thống kê
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LoaiVanBan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoiDungVanBan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuyetDinhBanHanh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoQuanQuyetDinhBanHanh)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoaiVanBan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoiDungVanBan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuyetDinhBanHanh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CoQuanQuyetDinhBanHanh)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdVanBanTuChu">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdVanBanTuChu">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdVanBanTuChu">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chartModalLabel">Biểu Đồ Cơ Cấu Tổ Chức</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <canvas id="myChart" width="800px" height="400px"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/demo/datatables-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    $('#chartModal').on('show.bs.modal', function () {
+        fetch('/VanBanTuChu/ChartData')
+            .then(response => response.json())
+            .then(data => {
+                ''
+                const ctx = document.getElementById('myChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'pie', // Hoặc 'pie' tùy thuộc vào loại biểu đồ bạn muốn
+                    data: {
+                        labels: data.labels, // Nhãn từ dữ liệu JSON
+                        datasets: [{
+                            label: 'Số lượng phòng ban',
+                            data: data.values, // Giá trị từ dữ liệu JSON
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false, // Cho phép thay đổi tỷ lệ khung hình
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Số lượng văn bản theo loại'
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching chart data:', error)); // Bắt lỗi nếu có
+    });
+</script>

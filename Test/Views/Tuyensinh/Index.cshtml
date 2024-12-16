@@ -1,0 +1,73 @@
+@model Test.Models.Tuyensinh
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Tuyensinh</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="cccd" class="control-label"></label>
+                <input asp-for="cccd" class="form-control" />
+                <span asp-validation-for="cccd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input id="name_" class="form-control" value="" disabled/>
+                <input asp-for="name" class="form-control" hidden/>
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="namsinh" class="control-label"></label>
+                <input id="namsinh_" class="form-control" value="" disabled/>
+                <input asp-for="namsinh" class="form-control" hidden/>
+                <span asp-validation-for="namsinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="gioitinh" class="control-label"></label>
+                <input id="gioitinh_" class="form-control" value="" disabled/>
+                <input asp-for="gioitinh" class="form-control" hidden/>
+                <span asp-validation-for="gioitinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="noituyensinh" class="control-label"></label>
+                <select asp-for="noituyensinh" class="form-control" asp-items="ViewBag.noits"></select>
+                <span asp-validation-for="noituyensinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts{
+    <script>
+        document.getElementById("cccd").addEventListener("focusout", (e) =>{
+            const xhttp = new XMLHttpRequest();
+            let id = e.target.value;
+            xhttp.open("get", `/Tuyensinh/Thongtin?id=${id}`);
+            xhttp.onload = function () {
+                if (this.status == 200) {
+                    var k = JSON.parse(this.responseText);
+                    for(var key in k) {
+                        if (key == "cccd") continue;
+                        document.getElementById(key).value = k[key];
+                        document.getElementById(key+"_").value = k[key];
+                    }
+                }
+            }
+            xhttp.send();
+        });
+    </script>
+}
+

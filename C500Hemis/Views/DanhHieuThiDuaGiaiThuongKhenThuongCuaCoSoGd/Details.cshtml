@@ -1,0 +1,60 @@
+﻿@model C500Hemis.Models.TbDanhHieuThiDuaGiaiThuongKhenThuongCuaCoSoGd
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>TbDanhHieuThiDuaGiaiThuongKhenThuongCuaCoSoGd</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdDanhHieuThiDuaGiaiThuongKhenThuong)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdDanhHieuThiDuaGiaiThuongKhenThuong)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SoQuyetDinhKhenThuong)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SoQuyetDinhKhenThuong)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NamKhenThuong)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NamKhenThuong)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdCapKhenThuongNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdCapKhenThuongNavigation.IdCapKhenThuong)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdDanhHieuThiDuaGiaiThuongKhenThuongCuaCoSoGdNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdDanhHieuThiDuaGiaiThuongKhenThuongCuaCoSoGdNavigation.IdThiDuaGiaiThuongKhenThuong)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdLoaiDanhHieuThiDuaGiaiThuongKhenThuongNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdLoaiDanhHieuThiDuaGiaiThuongKhenThuongNavigation.IdLoaiDanhHieuThiDuaGiaiThuongKhenThuong)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdPhuongThucKhenThuongNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdPhuongThucKhenThuongNavigation.IdPhuongThucKhenThuong)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdDanhHieuThiDuaGiaiThuongKhenThuongCuaCoSoGd">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

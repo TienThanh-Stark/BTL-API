@@ -1,0 +1,171 @@
+﻿@model C500Hemis.Models.TbCoCauToChuc
+
+@{
+    ViewData["Title"] = "Create";
+}
+<style>
+    body {
+        background-color: #fff9e9;
+    }
+    .head {
+        text-align: center;
+    }
+    /* Định dạng cho các ô nhập thông tin chính */
+    .form-group {
+        margin-bottom: 20px;
+        padding: 22px 25px 18px 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+    }
+
+        .form-group:hover {
+            border: 3px solid black; /* Xanh lá */
+        }
+
+    label {
+        font-size: 1.2em;
+        font-weight: bold;
+        display: block;
+    }
+
+    /* Tùy chỉnh hộp input và select */
+    input.form-control, select.form-control {
+        border: none; /* xóa viền mặc định */
+        border-bottom: 4px solid #dfe1e5; /* đặt viền dưới xám nhạt trước khi hover hoặc focus */
+        border-radius: 5px 5px 0px 0px;
+        background-color: transparent; /* nền trong suốt */
+        font-size: 16px;
+        padding: 10px;
+        transition: border-color 0.7s;
+    }
+        /* Hiệu ứng khi focus vào input và select */
+        input.form-control:focus, select.form-control:focus {
+            border-color: black; /* VIền dưới có màu xanh lá */
+            outline: none;
+            box-shadow: none;
+        }
+    /* Phần cuối: khối chứa 2 button */
+    .combo-button {
+        display: flex; /* Đặt 2 button trên 1 trục ngang từ trái sang phải */
+        justify-content: space-around;
+        margin-top: 20px;
+        padding: 2px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+    }
+
+    .submit {
+        background-color: #52ff51; /* Màu xanh lá nhạt */
+        border-radius: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color color 0.3s;
+        border: none;
+        width: 40%;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+        padding: 15px;
+        margin-right: 10px;
+    }
+
+        .submit:hover {
+            background-color: #00a800; /* Màu xanh đậm hơn khi hover */
+            color: white;
+            font-style: italic;
+        }
+
+    /* Định dang button "quay lại danh sách" */
+    .back {
+        background-color: #c8d7de; /* Màu xanh lá cây nhạt */
+        font-size: 20px;
+        font-weight: bold;
+        color: black;
+        border-radius: 10px;
+        text-decoration: none;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        text-align: center;
+        width: 40%;
+        padding: 15px;
+    }
+
+        .back:hover {
+            background-color: #91b0bf; /* màu xanh đậm, trùng màu cột tiêu đề */
+            color: white;
+            font-style: italic;
+        }
+</style>
+<h5>CƠ SỞ GIÁO DỤC</h5>
+<div class="head">
+    <h1>Tạo Cơ Cấu Tổ Chức</h1>
+    <h6>Chú ý: Điền đầy đủ thông tin trước khi tạo!</h6>
+</div>
+<hr />
+<div class="container-fluid px-4">
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-chart-bar me-1"></i>
+        Cập nhật thông tin
+    </div>
+    <div class="card-body">
+        <form asp-action="Create">
+            <div class="row">
+            <div class="col">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdCoCauToChuc" class="control-label"></label>
+                <input asp-for="IdCoCauToChuc" class="form-control" />
+                <span asp-validation-for="IdCoCauToChuc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaPhongBanDonVi" class="control-label"></label>
+                <input asp-for="MaPhongBanDonVi" class="form-control" />
+                <span asp-validation-for="MaPhongBanDonVi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdLoaiPhongBan" class="control-label"></label>
+                <select asp-for="IdLoaiPhongBan" class ="form-control" asp-items="ViewBag.IdLoaiPhongBan"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaPhongBanDonViCha" class="control-label"></label>
+                <input asp-for="MaPhongBanDonViCha" class="form-control" />
+                <span asp-validation-for="MaPhongBanDonViCha" class="text-danger"></span>
+            </div>
+            </div>
+
+            <div class="col">
+            <div class="form-group">
+                <label asp-for="TenPhongBanDonVi" class="control-label"></label>
+                <input asp-for="TenPhongBanDonVi" class="form-control" />
+                <span asp-validation-for="TenPhongBanDonVi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoQuyetDinhThanhLap" class="control-label"></label>
+                <input asp-for="SoQuyetDinhThanhLap" class="form-control" />
+                <span asp-validation-for="SoQuyetDinhThanhLap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayRaQuyetDinh" class="control-label"></label>
+                <input asp-for="NgayRaQuyetDinh" class="form-control" />
+                <span asp-validation-for="NgayRaQuyetDinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdTrangThai" class="control-label"></label>
+                <select asp-for="IdTrangThai" class ="form-control" asp-items="ViewBag.IdTrangThai"></select>
+            </div>
+            </div>
+            </div>
+            <div class="combo-button">
+                <input type="submit" value="XÁC NHẬN TẠO THÊM" class="submit"/>
+                <a class="back" asp-action="Index">QUAY LẠI DANH SÁCH</a>
+            </div>
+        </form>
+    </div>
+</div>
+    </div>
+</div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

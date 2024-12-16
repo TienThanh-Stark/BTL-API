@@ -1,0 +1,41 @@
+﻿@model IEnumerable<C500Hemis.Models.TbKhoaHoc>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TuNam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DenNam)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TuNam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DenNam)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdKhoaHoc">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdKhoaHoc">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdKhoaHoc">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
