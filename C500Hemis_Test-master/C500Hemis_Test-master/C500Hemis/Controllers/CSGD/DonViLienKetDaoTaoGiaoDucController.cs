@@ -253,149 +253,168 @@ namespace C500Hemis.Controllers.CSGD
             }
 
         }
-        // Phương thức xuất dữ liệu ra file Excel
-        public async Task<IActionResult> ExportToExcel()
-        {
-            try
-            {
-                // Lấy danh sách dữ liệu từ API
-                List<TbDonViLienKetDaoTaoGiaoDuc> data = await TbDonViLienKetDaoTaoGiaoDucs();
+        //// Phương thức xuất dữ liệu ra file Excel
+        //public async Task<IActionResult> ExportToExcel()
+        //{
+        //    try
+        //    {
+        //        // Lấy danh sách dữ liệu từ API
+        //        List<TbDonViLienKetDaoTaoGiaoDuc> data = await TbDonViLienKetDaoTaoGiaoDucs();
 
-                using (var package = new ExcelPackage())
-                {
-                    // Tạo một worksheet mới
-                    var worksheet = package.Workbook.Worksheets.Add("DonViLienKetDaoTaoGiaoDuc");
+        //        using (var package = new ExcelPackage())
+        //        {
+        //            // Tạo một worksheet mới
+        //            var worksheet = package.Workbook.Worksheets.Add("DonViLienKetDaoTaoGiaoDuc");
 
-                    // Đặt tiêu đề cột
-                    worksheet.Cells[1, 1].Value = "ID";
-                    worksheet.Cells[1, 2].Value = "Cơ Sở Giáo Dục";
-                    worksheet.Cells[1, 3].Value = "Địa Chỉ";
-                    worksheet.Cells[1, 4].Value = "Điện Thoại";
-                    worksheet.Cells[1, 5].Value = "Loại liên kết";
+        //            // Đặt tiêu đề cột
+        //            worksheet.Cells[1, 1].Value = "ID";
+        //            worksheet.Cells[1, 2].Value = "Cơ Sở Giáo Dục";
+        //            worksheet.Cells[1, 3].Value = "Địa Chỉ";
+        //            worksheet.Cells[1, 4].Value = "Điện Thoại";
+        //            worksheet.Cells[1, 5].Value = "Loại liên kết";
 
-                    // Điền dữ liệu vào các hàng
-                    for (int i = 0; i < data.Count; i++)
-                    {
-                        worksheet.Cells[i + 2, 1].Value = data[i].IdDonViLienKetDaoTaoGiaoDuc;
-                        worksheet.Cells[i + 2, 2].Value = data[i].IdCoSoGiaoDuc; // Lấy tên cơ sở giáo dục
-                        worksheet.Cells[i + 2, 3].Value = data[i].DiaChi;
-                        worksheet.Cells[i + 2, 4].Value = data[i].DienThoai;
-                        worksheet.Cells[i + 2, 5].Value = data[i].IdLoaiLienKet; // Lấy tên loại liên kết
-                    }
+        //            // Điền dữ liệu vào các hàng
+        //            for (int i = 0; i < data.Count; i++)
+        //            {
+        //                worksheet.Cells[i + 2, 1].Value = data[i].IdDonViLienKetDaoTaoGiaoDuc;
+        //                worksheet.Cells[i + 2, 2].Value = data[i].IdCoSoGiaoDuc; // Lấy tên cơ sở giáo dục
+        //                worksheet.Cells[i + 2, 3].Value = data[i].DiaChi;
+        //                worksheet.Cells[i + 2, 4].Value = data[i].DienThoai;
+        //                worksheet.Cells[i + 2, 5].Value = data[i].IdLoaiLienKet; // Lấy tên loại liên kết
+        //            }
 
 
-                    // Định dạng tự động cột
-                    worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+        //            // Định dạng tự động cột
+        //            worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
 
-                    // Tạo byte array để trả về file
-                    var fileContents = package.GetAsByteArray();
+        //            // Tạo byte array để trả về file
+        //            var fileContents = package.GetAsByteArray();
 
-                    return File(
-                        fileContents,
-                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        "DonViLienKetDaoTaoGiaoDuc.xlsx"
-                    );
-                }
-            }
-            catch (Exception ex)
-            {
-                // Xử lý lỗi
-                return BadRequest("Có lỗi xảy ra khi xuất file Excel.");
-            }
-        }
+        //            return File(
+        //                fileContents,
+        //                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        //                "DonViLienKetDaoTaoGiaoDuc.xlsx"
+        //            );
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Xử lý lỗi
+        //        return BadRequest("Có lỗi xảy ra khi xuất file Excel.");
+        //    }
+        //}
 
         //import dữ liệu
 
 
-            [HttpPost]
-            [ValidateAntiForgeryToken]
-            public async Task<IActionResult> ImportFromExcel(IFormFile formFile)
-        {
-            if (formFile == null || formFile.Length <= 0)
-            {
-                return BadRequest("File không hợp lệ!");
-            }
+    //        [HttpPost]
+    //        [ValidateAntiForgeryToken]
+    //        public async Task<IActionResult> ImportFromExcel(IFormFile formFile)
+    //    {
+    //        if (formFile == null || formFile.Length <= 0)
+    //        {
+    //            return BadRequest("File không hợp lệ!");
+    //        }
 
-            if (!Path.GetExtension(formFile.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
-            {
-                return BadRequest("File phải có định dạng .xlsx!");
-            }
+    //        if (!Path.GetExtension(formFile.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
+    //        {
+    //            return BadRequest("File phải có định dạng .xlsx!");
+    //        }
 
-            try
-            {
-                var list = new List<TbDonViLienKetDaoTaoGiaoDuc>();
+    //        try
+    //        {
+    //            var list = new List<TbDonViLienKetDaoTaoGiaoDuc>();
 
-                using (var stream = new MemoryStream())
-                {
-                    // Đọc file Excel vào stream
-                    await formFile.CopyToAsync(stream);
+    //            using (var stream = new MemoryStream())
+    //            {
+    //                // Đọc file Excel vào stream
+    //                await formFile.CopyToAsync(stream);
 
-                    using (var package = new ExcelPackage(stream))
-                    {
-                        // Lấy worksheet đầu tiên
-                        var worksheet = package.Workbook.Worksheets[0];
-                        var rowCount = worksheet.Dimension.Rows;
+    //                using (var package = new ExcelPackage(stream))
+    //                {
+    //                    // Lấy worksheet đầu tiên
+    //                    var worksheet = package.Workbook.Worksheets[0];
+    //                    var rowCount = worksheet.Dimension.Rows;
 
-                        // Duyệt qua các hàng trong file Excel, bắt đầu từ hàng 2 (hàng 1 là tiêu đề)
-                        for (int row = 2; row <= rowCount; row++)
-                        {
-                            var tbDonViLienKetDaoTaoGiaoDuc = new TbDonViLienKetDaoTaoGiaoDuc
-                            {
-                                IdDonViLienKetDaoTaoGiaoDuc = Convert.ToInt32(worksheet.Cells[row, 1].Value?.ToString().Trim()),
-                                IdCoSoGiaoDuc = string.IsNullOrWhiteSpace(worksheet.Cells[row, 2].Value?.ToString().Trim())
-    ? (int?)null
-    : Convert.ToInt32(worksheet.Cells[row, 2].Value?.ToString().Trim()),
-                                DiaChi = worksheet.Cells[row, 3].Value?.ToString().Trim(),
-                                DienThoai = worksheet.Cells[row, 4].Value?.ToString().Trim(),
-                                IdLoaiLienKet = string.IsNullOrWhiteSpace(worksheet.Cells[row, 5].Value?.ToString().Trim())
-    ? (int?)null
-    : Convert.ToInt32(worksheet.Cells[row, 5].Value?.ToString().Trim())
+    //                    // Duyệt qua các hàng trong file Excel, bắt đầu từ hàng 2 (hàng 1 là tiêu đề)
+    //                    for (int row = 2; row <= rowCount; row++)
+    //                    {
+    //                        var tbDonViLienKetDaoTaoGiaoDuc = new TbDonViLienKetDaoTaoGiaoDuc
+    //                        {
+    //                            IdDonViLienKetDaoTaoGiaoDuc = Convert.ToInt32(worksheet.Cells[row, 1].Value?.ToString().Trim()),
+    //                            IdCoSoGiaoDuc = string.IsNullOrWhiteSpace(worksheet.Cells[row, 2].Value?.ToString().Trim())
+    //? (int?)null
+    //: Convert.ToInt32(worksheet.Cells[row, 2].Value?.ToString().Trim()),
+    //                            DiaChi = worksheet.Cells[row, 3].Value?.ToString().Trim(),
+    //                            DienThoai = worksheet.Cells[row, 4].Value?.ToString().Trim(),
+    //                            IdLoaiLienKet = string.IsNullOrWhiteSpace(worksheet.Cells[row, 5].Value?.ToString().Trim())
+    //? (int?)null
+    //: Convert.ToInt32(worksheet.Cells[row, 5].Value?.ToString().Trim())
 
-                            };
+    //                        };
 
-                            // Thêm từng bản ghi vào danh sách
-                            list.Add(tbDonViLienKetDaoTaoGiaoDuc);
-                        }
-                    }
-                }
+    //                        // Thêm từng bản ghi vào danh sách
+    //                        list.Add(tbDonViLienKetDaoTaoGiaoDuc);
+    //                    }
+    //                }
+    //            }
 
-                // Lưu danh sách vào cơ sở dữ liệu thông qua API
-                foreach (var item in list)
-                {
-                    if (!await TbDonViLienKetDaoTaoGiaoDucExists(item.IdDonViLienKetDaoTaoGiaoDuc))
-                    {
-                        await ApiServices_.Create<TbDonViLienKetDaoTaoGiaoDuc>("/api/csgd/DonViLienKetDaoTaoGiaoDuc", item);
-                    }
-                }
+    //            // Lưu danh sách vào cơ sở dữ liệu thông qua API
+    //            foreach (var item in list)
+    //            {
+    //                if (!await TbDonViLienKetDaoTaoGiaoDucExists(item.IdDonViLienKetDaoTaoGiaoDuc))
+    //                {
+    //                    await ApiServices_.Create<TbDonViLienKetDaoTaoGiaoDuc>("/api/csgd/DonViLienKetDaoTaoGiaoDuc", item);
+    //                }
+    //            }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Có lỗi xảy ra khi nhập file Excel: {ex.Message}");
-            }
-        }
+    //            return RedirectToAction(nameof(Index));
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            return BadRequest($"Có lỗi xảy ra khi nhập file Excel: {ex.Message}");
+    //        }
+    //    }
 
-        //CHart
+
         [HttpGet]
-        public async Task<IActionResult> ChartData()
+        public async Task<IActionResult> ChartData(string dataType)
         {
             try
             {
                 var data = await TbDonViLienKetDaoTaoGiaoDucs();
 
-                // Nhóm theo IdLoaiPhongBan và đếm số lượng
-                var chartData = data.GroupBy(x => x.IdCoSoGiaoDucNavigation.TenDonVi) //đối tượng hiển thị
-                    .Select(g => new
-                    {
-                        Label = g.Key,
-                        Count = g.Count() // Đếm số lượng phòng ban cho mỗi loại
-                    }).ToList();
+                IEnumerable<dynamic> chartData;
+
+                if (dataType == "LoaiLienKet")
+                {
+                    // Nhóm theo IdLoaiPhongBan và đếm số lượng
+                    chartData = data.GroupBy(x => x.IdLoaiLienKetNavigation.LoaiLienKet)
+                        .Select(g => new
+                        {
+                            Label = g.Key,
+                            Count = g.Count()
+                        }).ToList();
+                }
+                else if (dataType == "TenDonVi")
+                {
+                    // Nhóm theo IdTrangThai và đếm số lượng
+                    chartData = data.GroupBy(x => x.IdCoSoGiaoDucNavigation.TenDonVi)
+                        .Select(g => new
+                        {
+                            Label = g.Key,
+                            Count = g.Count()
+                        }).ToList();
+                }
+                else
+                {
+                    return BadRequest("Loại dữ liệu không hợp lệ.");
+                }
 
                 return Json(new
                 {
                     labels = chartData.Select(x => x.Label).ToArray(),
-                    values = chartData.Select(x => x.Count).ToArray() // Số lượng tương ứng
+                    values = chartData.Select(x => x.Count).ToArray()
                 });
             }
             catch (Exception ex)
@@ -403,7 +422,6 @@ namespace C500Hemis.Controllers.CSGD
                 return BadRequest();
             }
         }
-
         private async Task<bool> TbDonViLienKetDaoTaoGiaoDucExists(int id)
         {
             var tbDonViLienKetDaoTaoGiaoDucs = await ApiServices_.GetAll<TbDonViLienKetDaoTaoGiaoDuc>("/api/csgd/DonViLienKetDaoTaoGiaoDuc");

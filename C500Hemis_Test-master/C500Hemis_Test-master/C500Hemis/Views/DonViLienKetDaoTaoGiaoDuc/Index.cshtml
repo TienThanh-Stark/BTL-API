@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Index";
 }
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <link href="~/css/styles.css" rel="stylesheet" />
 <style>
     .datatable-selector {
@@ -27,9 +30,18 @@
         background-color: var(--bs-card-cap-bg);
         border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
     }
+
+    .modal-dialog {
+        max-width: 70%; /* Tăng chiều rộng của modal */
+    }
+
+    .modal-body {
+        height: 80vh; /* Chiều cao tương đối của nội dung modal */
+        overflow: auto;
+    }
 </style>
 
-<h1 class="mt-4">Đơn Vị Liên Kết Đào Tạo Giáo Dục</h1>
+<h1 class="mt-4">Đơn vị liên kết đào tạo giáo dục</h1>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">Index</li>
 </ol>
@@ -37,7 +49,7 @@
 <div class="row">
     <div class="col-xl-3 col-md-6">
         <div class="card bg-primary text-white mb-4">
-            <div class="card-body">Tạo Mới</div>
+            <div class="card-body" style="font-weight: bold;">Tạo Mới</div>
             <div class="card-footer d-flex align-items-center justify-content-between">
                 <a class="small text-white stretched-link" asp-action="Create">Create</a>
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -46,18 +58,18 @@
     </div>
     <div class="col-xl-3 col-md-6">
         <div class="card bg-warning text-white mb-4">
-            <div class="card-body">Xuất Excel</div>
+            <div class="card-body" style="font-weight: bold;">Xuất Excel</div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="#">View Details</a>
+               @*  <a class="small text-white stretched-link" asp-action="ExportToExcel">ExportToExcel</a> *@
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
             </div>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
         <div class="card bg-success text-white mb-4">
-            <div class="card-body">Import</div>
+            <div class="card-body" style="font-weight: bold;">Upload File</div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="#">View Details</a>
+               @*  <a class="small text-white stretched-link" asp-action="Import">Import</a> *@
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
             </div>
         </div>
@@ -65,24 +77,24 @@
     <div class="col-xl-3 col-md-6">
         <div class="card bg-danger text-white mb-4">
             <div class="inline-block">
-                <label for="chartType">Chọn loại biểu đồ:</label>
+                <label for="chartType" style="font-weight: bold;">Chọn loại biểu đồ:</label>
                 <select id="chartType">
+                    <option value="pie">Biểu đồ tròn</option>
                     <option value="bar">Biểu đồ cột</option>
                     <option value="line">Biểu đồ đường</option>
-                    <option value="pie">Biểu đồ tròn</option>
                 </select>
             </div>
 
             <div class="inline-block">
-                <label for="dataType">Chọn loại dữ liệu:</label>
+                <label for="dataType" style="font-weight: bold;">Chọn loại dữ liệu:</label>
                 <select id="dataType">
-                    <option value="LoaiPhongBan">Loại Phòng Ban</option>
-                    <option value="TrangThai">Trạng Thái</option>
+                    <option value="LoaiLienKet">Loại Liên Kết</option>
+                    <option value="TenDonVi">Tên Đơn Vị</option>
                 </select>
             </div>
 
             <div class="card-footers d-flex align-items-center justify-content-between" stylt="padding-bottom: 5px !important;padding-top: 5px !important;">
-                <button id="showChart" data-toggle="modal" data-target="#chartModal" style="width: 100%; border: none;">
+                <button id="showChart" data-toggle="modal" data-target="#chartModal" style="width: 100%; border: none; font-weight: bold;">
                     Hiển Thị Biểu Đồ
                 </button>
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -102,46 +114,177 @@
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.DiaChi)
+                        <th style="text-align:center;">
+                            @Html.DisplayNameFor(model => model.IdDonViLienKetDaoTaoGiaoDuc)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.DienThoai)
-                        </th>
-                        <th>
+                        <th style="text-align:center;">
                             @Html.DisplayNameFor(model => model.IdCoSoGiaoDucNavigation)
                         </th>
-                        <th>
+                        <th style="text-align:center;">
+                            @Html.DisplayNameFor(model => model.DiaChi)
+                        </th>
+                        <th style="text-align:center;">
+                            @Html.DisplayNameFor(model => model.DienThoai)
+                        </th>
+
+                        <th style="text-align:center;">
                             @Html.DisplayNameFor(model => model.IdLoaiLienKetNavigation)
                         </th>
-                        <th></th>
+                        <th>THÊM</th>
                     </tr>
                 </thead>
                 <tbody>
-            @foreach (var item in Model) {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DiaChi)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DienThoai)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdCoSoGiaoDucNavigation.IdCoSoGiaoDuc)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdLoaiLienKetNavigation.IdLoaiLienKet)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.IdDonViLienKetDaoTaoGiaoDuc">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.IdDonViLienKetDaoTaoGiaoDuc">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.IdDonViLienKetDaoTaoGiaoDuc">Delete</a>
-                        </td>
-                    </tr>
-            }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:center;">
+                                @Html.DisplayFor(modelItem => item.IdDonViLienKetDaoTaoGiaoDuc)
+                            </td>
+                            <td style="text-align:left;">
+                                @Html.DisplayFor(modelItem => item.IdCoSoGiaoDucNavigation.TenDonVi)
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
+                            <td style="text-align:left;">
+                                @Html.DisplayFor(modelItem => item.DienThoai)
+                            </td>
+
+                            <td>@Html.DisplayFor(modelItem => item.IdLoaiLienKetNavigation.LoaiLienKet)</td>
+
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.IdDonViLienKetDaoTaoGiaoDuc" style="font-weight: bold; ">Sửa</a> |
+                                <a asp-action="Details" asp-route-id="@item.IdDonViLienKetDaoTaoGiaoDuc" style="font-weight: bold;">Chi Tiết</a> |
+                                <a asp-action="Delete" asp-route-id="@item.IdDonViLienKetDaoTaoGiaoDuc" style="font-weight: bold;">Xóa</a>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
+
         </div>
     </div>
 </div>
-<script src="~/js/datatables-simple-demo.js"></script>
+
+<!-- Modal -->
+<div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chartModalLabel">Biểu Đồ Cơ Cấu Tổ Chức</h5>
+            </div>
+            <div class="modal-body">
+                <canvas id="myChart" width="1200" height="600"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/demo/datatables-demo.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+
+<script>
+    // Biến toàn cục để lưu trữ biểu đồ
+    let myChart;
+
+    $(document).ready(function () {
+        $('#showChart').click(function () {
+            var selectedChartType = $('#chartType').val();
+            var selectedDataType = $('#dataType').val();
+
+            // Gọi API để lấy dữ liệu
+            $.get('/DonViLienKetDaoTaoGiaoDuc/ChartData', { dataType: selectedDataType }, function (data) {
+                displayChart(selectedChartType, data.labels, data.values); // Hiển thị biểu đồ
+                $('#chartModal').modal('show'); // Hiển thị modal
+            });
+        });
+    });
+
+    function displayChart(type, labels, values) {
+        // Hủy biểu đồ cũ nếu tồn tại
+        if (myChart) {
+            myChart.destroy();
+        }
+
+        // Tạo biểu đồ mới
+        var ctx = document.getElementById('myChart').getContext('2d');
+        myChart = new Chart(ctx, {
+            type: type, // Loại biểu đồ được chọn
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Số lượng',
+                    data: values,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true, // Đảm bảo biểu đồ phản hồi với khung chứa
+                maintainAspectRatio: false, // Cho phép điều chỉnh tỷ lệ biểu đồ
+                plugins: {
+                    legend: {
+                        display: true, // Bật chú thích (legend)
+                        position: 'top', // Vị trí của chú thích (top, bottom, left, right)
+                        labels: {
+                            font: {
+                                size: 12 // Cỡ chữ chú thích
+                            },
+                            boxWidth: 20 // Kích thước ô vuông màu trong chú thích
+                        }
+                    },
+                    title: {
+                        display: true, // Hiển thị tiêu đề biểu đồ
+                        text: 'Số lượng',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        },
+                        padding: {
+                            top: 10,
+                            bottom: 10
+                        }
+                    }
+                },
+                scales: type === 'pie' ? {} : { // Chỉ áp dụng thang đo cho biểu đồ không phải "pie"
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Phòng ban'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Số lượng'
+                        }
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 10,
+                        top: 10,
+                        bottom: 10
+                    }
+                }
+            }
+
+        });
+    }
+</script>
